@@ -1,0 +1,28 @@
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Henrique\Desktop\State with cats\FLanguage\src\main\scala\br\unb\cic\flang\Interpreter.scala:5:8: not found: object cats[0m
+[0m[[0m[31merror[0m] [0m[0mimport cats.Monad[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Henrique\Desktop\State with cats\FLanguage\src\main\scala\br\unb\cic\flang\Monad.scala:4:8: not found: object cats[0m
+[0m[[0m[31merror[0m] [0m[0mimport cats.syntax.all._ // Importa as extensões do Cats, incluindo a função `pure`[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Henrique\Desktop\State with cats\FLanguage\src\main\scala\br\unb\cic\flang\Monad.scala:3:8: not found: object cats[0m
+[0m[[0m[31merror[0m] [0m[0mimport cats.data.State[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Henrique\Desktop\State with cats\FLanguage\src\main\scala\br\unb\cic\flang\Monad.scala:10:15: not found: type State[0m
+[0m[[0m[31merror[0m] [0m[0m  type M[A] = State[S, A][0m
+[0m[[0m[31merror[0m] [0m[0m              ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Henrique\Desktop\State with cats\FLanguage\src\main\scala\br\unb\cic\flang\Monad.scala:13:47: value runA is not a member of br.unb.cic.flang.StateMonad.package.M[A][0m
+[0m[[0m[31merror[0m] [0m[0m  def runState[A](s: M[A]): (S => (A, S)) = s.runA(_).run[0m
+[0m[[0m[31merror[0m] [0m[0m                                              ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Henrique\Desktop\State with cats\FLanguage\src\main\scala\br\unb\cic\flang\Monad.scala:16:28: not found: value State[0m
+[0m[[0m[31merror[0m] [0m[0m  def put(s: S): M[Unit] = State.set(s)[0m
+[0m[[0m[31merror[0m] [0m[0m                           ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Henrique\Desktop\State with cats\FLanguage\src\main\scala\br\unb\cic\flang\Monad.scala:19:21: not found: value State[0m
+[0m[[0m[31merror[0m] [0m[0m  def get(): M[S] = State.get[0m
+[0m[[0m[31merror[0m] [0m[0m                    ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Henrique\Desktop\State with cats\FLanguage\src\main\scala\br\unb\cic\flang\Monad.scala:33:29: not found: value State[0m
+[0m[[0m[31merror[0m] [0m[0m  def pure[A](a: A): M[A] = State.pure(a)[0m
+[0m[[0m[31merror[0m] [0m[0m                            ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Henrique\Desktop\State with cats\FLanguage\src\main\scala\br\unb\cic\flang\Monad.scala:36:51: value flatMap is not a member of br.unb.cic.flang.StateMonad.package.M[A][0m
+[0m[[0m[31merror[0m] [0m[0m  def bind[A, B](m: M[A])(f: A => M[B]): M[B] = m.flatMap(f)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m9 errors found[0m

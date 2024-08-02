@@ -1,25 +1,21 @@
 package br.unb.cic.flang
 
+import cats.data.State
+import cats.syntax.all._ 
+
 package object StateMonad {
   type S = List[(String, Integer)]
 
-  case class M[A](f: S => (A, S))
+  type M[A] = State[S, A]
 
-  def pure[A](a: A): M[A] = M[A] { s => (a, s) }
+  def runState[A](state: M[A], initialState: S): (A, S) = {
+    val (finalState, result) = state.run(initialState).value
+    (result, finalState)
+  }
 
-  def bind[A, B](m: M[A])(f: A => M[B]): M[B] = M({ s: S =>
-    {
-      val (a, s1) = runState(m)(s)
-      val (b, s2) = runState(f(a))(s1)
-      (b, s2)
-    }
-  })
+  def put(s: S): M[Unit] = State.set(s)
 
-  def runState[A](s: M[A]): (S => (A, S)) = s.f
-
-  def put(s: S): M[Unit] = M({ _: S => ((), s) })
-
-  def get[A](): M[S] = M({ s: S => (s, s) })
+  def get(): M[S] = State.get
 
   def declareVar(name: String, value: Integer, state: S): S =
     (name, value) :: state
@@ -30,4 +26,7 @@ package object StateMonad {
     case _ :: tail                   => lookupVar(name, tail)
   }
 
+  def pure[A](a: A): M[A] = State.pure(a)
+
+  def bind[A, B](m: M[A])(f: A => M[B]): M[B] = m.flatMap(f)
 }

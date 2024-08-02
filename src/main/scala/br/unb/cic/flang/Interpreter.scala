@@ -2,6 +2,7 @@ package br.unb.cic.flang
 
 import Declarations._
 import StateMonad._
+import cats.Monad
 
 object Interpreter {
 

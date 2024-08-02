@@ -7,6 +7,6 @@ lazy val root = (project in file("."))
     name := "FLanguage"
   )
 
+libraryDependencies += "org.typelevel" %% "cats-core" % "2.9.0" // Versão atualizada do Cats Core
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.19"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % "test"
-
