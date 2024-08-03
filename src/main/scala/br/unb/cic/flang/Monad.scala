@@ -1,32 +1,42 @@
 package br.unb.cic.flang
 
-import cats.data.State
-import cats.syntax.all._ 
+import cats.data.{StateT, EitherT}
+import cats.instances.either._
+import cats.syntax.applicative._
 
-package object StateMonad {
+object StateAndEH {
+
+  // Define the type of the state
   type S = List[(String, Integer)]
 
-  type M[A] = State[S, A]
+  // Define the type of the error
+  type Error = String
 
-  def runState[A](state: M[A], initialState: S): (A, S) = {
-    val (finalState, result) = state.run(initialState).value
-    (result, finalState)
-  }
+  // Define the monad stack
+  type Stack[A] = StateT[Either[Error, *], S, A]
 
-  def put(s: S): M[Unit] = State.set(s)
+  // Helper to lift an Either into the stack
+  def liftEither[A](either: Either[Error, A]): Stack[A] =
+    StateT.liftF[Either[Error, *], S, A](either)
 
-  def get(): M[S] = State.get
+  // Helper to create pure values in the stack
+  def pure[A](a: A): Stack[A] =
+    StateT.pure[Either[Error, *], S, A](a)
 
-  def declareVar(name: String, value: Integer, state: S): S =
-    (name, value) :: state
+  // Helper to run the stack
+  def runStack[A](state: Stack[A], initialState: S): Either[Error, (S, A)] =
+    state.run(initialState)
 
-  def lookupVar(name: String, state: S): Integer = state match {
-    case List()                      => ???
-    case (n, v) :: tail if n == name => v
-    case _ :: tail                   => lookupVar(name, tail)
-  }
+  // Function to declare a variable in the state
+  def declareVar(name: String, value: Integer): Stack[Unit] =
+    StateT.modify[Either[Error, *], S](state => (name, value) :: state)
 
-  def pure[A](a: A): M[A] = State.pure(a)
-
-  def bind[A, B](m: M[A])(f: A => M[B]): M[B] = m.flatMap(f)
+  // Function to lookup a variable in the state
+  def lookupVar(name: String): Stack[Integer] =
+    StateT.inspectF[Either[Error, *], S, Integer] { state =>
+      state.find(_._1 == name) match {
+        case Some((_, value)) => Right(value)
+        case None => Left(s"Variable '$name' not found")
+      }
+    }
 }
