@@ -51,4 +51,34 @@ class InterpreterTest extends AnyFlatSpec with should.Matchers {
     val (res, _) = runState(eval(app, declarations), initialState)
     res should be (100)
   }
+
+  "eval IfThenElse(Eq(CInt(1), CInt(1)), CInt(1), CInt(0))" should "return 1 (true)" in {
+    val ifElse = IfThenElse(Eq(CInt(1), CInt(1)), CInt(1), CInt(0))
+    val (res, _) = runState(eval(ifElse, declarations), initialState)
+    res should be (1)
+  }
+
+  "eval IfThenElse(Eq(CInt(1), CInt(0)), CInt(1), CInt(0))" should "return 0 (false)" in {
+    val ifElse = IfThenElse(Eq(CInt(1), CInt(0)), CInt(1), CInt(0))
+    val (res, _) = runState(eval(ifElse, declarations), initialState)
+    res should be (0)
+  }
+
+  "eval IfThenElse(Eq(Add(CInt(1), CInt(1)), CInt(2)), CInt(100), CInt(200))" should "return 100 (true)" in {
+    val ifElse = IfThenElse(Eq(Add(CInt(1), CInt(1)), CInt(2)), CInt(100), CInt(200))
+    val (res, _) = runState(eval(ifElse, declarations), initialState)
+    res should be (100)
+  }
+
+  "eval IfThenElse(Eq(Add(CInt(2), CInt(2)), CInt(5)), CInt(100), CInt(200))" should "return 200 (false)" in {
+    val ifElse = IfThenElse(Eq(Add(CInt(2), CInt(2)), CInt(5)), CInt(100), CInt(200))
+    val (res, _) = runState(eval(ifElse, declarations), initialState)
+    res should be (200)
+  }
+
+  "eval IfThenElse(CInt(1), CInt(100), CInt(200))" should "return 100 (true)" in {
+    val ifElse = IfThenElse(CInt(1), CInt(100), CInt(200))
+    val (res, _) = runState(eval(ifElse, declarations), initialState)
+    res should be (100)
+  }
 }
