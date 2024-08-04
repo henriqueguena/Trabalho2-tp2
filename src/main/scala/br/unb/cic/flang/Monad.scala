@@ -19,12 +19,11 @@ object StateMonad {
 
   def get(): M[S] = State.get
 
-  def declareVar(name: String, value: Integer, state: S): S =
-    (name, value) :: state
+  def declareVar(name: String, value: Integer, state: S): S = (name, value) :: state
 
   def lookupVar(name: String, state: S): Integer = state match {
-    case List()                      => throw new NoSuchElementException(s"Variable $name not found")
+    case List() => throw new NoSuchElementException(s"Variable $name not found")
     case (n, v) :: tail if n == name => v
-    case _ :: tail                   => lookupVar(name, tail)
+    case _ :: tail => lookupVar(name, tail)
   }
 }

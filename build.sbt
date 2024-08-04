@@ -10,3 +10,6 @@ lazy val root = (project in file("."))
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.9.0" // Versão atualizada do Cats Core
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.19"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % "test"
+libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
+libraryDependencies += "org.typelevel" %% "cats-parse" % "0.3.9"
+
